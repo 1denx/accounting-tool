@@ -5,6 +5,7 @@ import { Plus, Trash2, TrendingUp, TrendingDown, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 // 型別定義
 type RecordType = "income" | "expense";
@@ -176,10 +177,17 @@ export default function AccountingPage() {
           </CardContent>
         </Card>
 
-        <Button className="w-full" onClick={() => (window.location.href = "/")}>
-          <Home className="mr-2 w-4 h-4" />
-          Go Back
-        </Button>
+        <Link
+          href={{
+            pathname: "/",
+            query: { name: "Home" },
+          }}
+        >
+          <Button className="w-full">
+            <Home className="mr-2 w-4 h-4" />
+            Go Back
+          </Button>
+        </Link>
       </div>
     </main>
   );

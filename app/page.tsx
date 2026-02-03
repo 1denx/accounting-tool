@@ -1,3 +1,6 @@
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen items-center justify-center font-sans dark:bg-black">
@@ -13,13 +16,16 @@ export default function Home() {
           </h1>
         </div>
         <div className="w-full flex justify-center items-center gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="/accounting"
-            rel="noopener noreferrer"
+          <Link
+            href={{
+              pathname: "/accounting",
+              query: { name: "accounting" },
+            }}
           >
-            Click to start
-          </a>
+            <Button className="w-full rounded-full h-12 px-5 bg-foreground text-background transition-colors">
+              Click to start
+            </Button>
+          </Link>
         </div>
       </main>
     </div>
