@@ -7,7 +7,7 @@ import { RecordSubTotal } from "./SubTotal";
 
 interface RecordListProps {
   records: Record[];
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
   total: number;
 }
 

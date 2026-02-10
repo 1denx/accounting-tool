@@ -6,7 +6,7 @@ import { Record } from "../types/accounting";
 
 interface RecordItemProps {
   record: Record;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 export function RecordItem({ record, onDelete }: RecordItemProps) {
