@@ -10,8 +10,9 @@ export interface RecordFormData {
 
 // 記錄
 export interface Record {
-  id: number;
+  id: string; // Firestore ID 是 string
   type: RecordType;
   amount: number;
   desc: string;
+  createdAt: Date | null;
 }
