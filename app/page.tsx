@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { LoginForm } from "./auth/components/LoginForm";
 import { RegisterForm } from "./auth/components/RegisterForm";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,15 +12,8 @@ type AuthMode = "login" | "register";
 
 export default function Home() {
   const router = useRouter();
-  const { isAuthenticated, isLoading, login, register } = useAuth();
+  const { isAuthenticated, isLoading, login, register, user } = useAuth();
   const [mode, setMode] = useState<AuthMode>("login");
-
-  // 如果已登入就跳轉到記帳頁面
-  useEffect(() => {
-    if (!isLoading && isAuthenticated) {
-      router.push("/accounting");
-    }
-  }, [isAuthenticated, isLoading, router]);
 
   if (isLoading) {
     return (
@@ -30,11 +24,6 @@ export default function Home() {
         </div>
       </div>
     );
-  }
-
-  // 已登入，重新導向中
-  if (isAuthenticated) {
-    return null;
   }
 
   // 未登入，顯示登入 / 註冊表單
@@ -52,19 +41,33 @@ export default function Home() {
             <p className="mt-1 text-muted-foreground">管理您的收支記錄</p>
           </div>
 
-          {/* 根據 mode 顯示不同的表單*/}
-          {mode === "login" ? (
-            <LoginForm
-              onSuccess={() => router.push("/accounting")}
-              onSwitchToRegister={() => setMode("register")}
-              onLogin={login}
-            />
+          {/* 如果已登入，顯示歡迎詞與進入按鈕 */}
+          {isAuthenticated ? (
+            <div className="bg-card p-8 rounded-lg border shadow-sm text-center space-y-4">
+              <p className="text-lg">
+                歡迎回來，<span className="font-semibold">{user?.displayName || "使用者"}</span>
+              </p>
+              <Button className="w-full" size="lg" onClick={() => router.push("/accounting")}>
+                開始使用
+              </Button>
+            </div>
           ) : (
-            <RegisterForm
-              onSuccess={() => router.push("/accounting")}
-              onSwitchToLogin={() => setMode("login")}
-              onRegister={register}
-            />
+            <>
+              {/* 未登入時根據 mode 顯示不同的表單*/}
+              {mode === "login" ? (
+                <LoginForm
+                  onSuccess={() => router.push("/")}
+                  onSwitchToRegister={() => setMode("register")}
+                  onLogin={login}
+                />
+              ) : (
+                <RegisterForm
+                  onSuccess={() => router.push("/")}
+                  onSwitchToLogin={() => setMode("login")}
+                  onRegister={register}
+                />
+              )}
+            </>
           )}
         </div>
       </main>

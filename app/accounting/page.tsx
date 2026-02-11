@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Home, Loader2, LogOut } from "lucide-react";
@@ -83,12 +82,10 @@ export default function AccountingPage() {
             <RecordList records={records} onDelete={handleDelete} total={subTotal} />
           )}
 
-          <Link href="/">
-            <Button className="w-full" variant="outline">
-              <Home className="mr-2 w-4 h-4" />
-              返回首頁
-            </Button>
-          </Link>
+          <Button className="w-full" variant="outline" onClick={() => router.push("/")}>
+            <Home className="mr-2 w-4 h-4" />
+            返回首頁
+          </Button>
         </div>
       </main>
     </div>
